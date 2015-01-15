@@ -6,4 +6,4 @@ Super minimal shell bookmarking.
 
 `g [bookmark]`: will cd to directory bookmark (if "[bookmark]" is defined).
 
-The script is POSIX compilient (I think). If not, let me know and I'll fix that.
+`savemarks`: will write the marks to `$HOME/.shmarks`. When you source `shmark.sh`, it'll load global marks from `$HOME/.shmarks`.

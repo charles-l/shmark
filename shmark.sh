@@ -1,6 +1,6 @@
 #!/bin/sh
 #Super minimal bookmarking
-export MARKS=""
+export MARKS="`[ -f $HOME/.shmarks ] && cat $HOME/.shmarks`"
 _mark() {
     MARKS="$MARKS $1:`pwd` "
 }
@@ -32,4 +32,7 @@ g() {
     else
         echo "Mark not set."
     fi
+}
+savemarks() {
+    echo "$MARKS" > $HOME/.shmarks
 }
