@@ -12,6 +12,11 @@ _get_mark() {
     done
     return 1
 }
+_list_marks(){
+    for i in $MARKS; do
+        echo ${i%%:*} ${i#*:}
+    done
+}
 _remove_mark() {
     MARKS=`echo $MARKS | sed "s|$1:.*||g"`
 }
@@ -26,11 +31,15 @@ m() {
     fi
 }
 g() {
-    _m=`_get_mark $1`
-    if [ $? == 0 ]; then
-        cd "$_m"
+    if [ -z "$1" ]; then
+        _list_marks | column -t
     else
-        echo "Mark not set."
+        _m=`_get_mark "$1"`
+        if [ $? == 0 ]; then
+            cd "$_m"
+        else
+            echo "Mark not set."
+        fi
     fi
 }
 savemarks() {
