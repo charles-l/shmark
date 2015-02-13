@@ -20,7 +20,7 @@ _list_marks(){
 _remove_mark() {
     MARKS=`echo $MARKS | sed "s|$1:.*||g"`
 }
-m() {
+_create_mark() {
     _m=`_get_mark $1`
     if [ $? == 0 ]; then
         echo "Remarking"
@@ -30,7 +30,7 @@ m() {
         _mark $1
     fi
 }
-g() {
+_goto_mark() {
     if [ -z "$1" ]; then
         _list_marks | column -t
     else
@@ -45,3 +45,9 @@ g() {
 savemarks() {
     echo "$MARKS" > $HOME/.shmarks
 }
+
+if [ -f "$HOME/.shmarkrc" ]; then
+    . $HOME/.shmarkrc
+    [ ! -z "$create_mark" ] && alias `echo $create_mark`='_create_mark'
+    [ ! -z "$goto_mark" ] && alias `echo $goto_mark`='_goto_mark'
+fi
