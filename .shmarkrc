@@ -1,0 +1,3 @@
+# basic shmark configuration
+create_mark='c'
+goto_mark='g'
