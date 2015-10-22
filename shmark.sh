@@ -21,13 +21,17 @@ _remove_mark() {
     MARKS=`echo $MARKS | sed "s|$1:.*||g"`
 }
 m() {
-    _m=`_get_mark $1`
-    if [ $? == 0 ]; then
-        echo "Remarking"
-        _remove_mark $1
-        _mark $1
+    if [ -z "$1" ]; then
+        _list_marks | column -t
     else
-        _mark $1
+        _m=`_get_mark $1`
+        if [ $? == 0 ]; then
+            echo "Remarking"
+            _remove_mark $1
+            _mark $1
+        else
+            _mark $1
+        fi
     fi
 }
 g() {
