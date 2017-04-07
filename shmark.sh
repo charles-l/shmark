@@ -1,6 +1,11 @@
 #!/bin/sh
 #Super minimal bookmarking
 export MARKS="`[ -f $HOME/.shmarks ] && cat $HOME/.shmarks | tr '\n' ' '`"
+_mark_completion() {
+  if [[ -n "$BASH" ]]; then
+    complete -W "$(for i in $MARKS ; do echo -n "${i%%:*} " ; done)" g
+  fi
+}
 _mark() {
     MARKS="$MARKS $1:`pwd` "
 }
@@ -33,6 +38,7 @@ m() {
             _mark $1
         fi
     fi
+    _mark_completion
 }
 g() {
     if [[ -z "$1" ]]; then
@@ -53,3 +59,4 @@ g() {
 savemarks() {
     echo "$MARKS" | tr ' ' '\n' > $HOME/.shmarks
 }
+_mark_completion
